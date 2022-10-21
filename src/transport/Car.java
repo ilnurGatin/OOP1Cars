@@ -2,14 +2,10 @@ package transport;
 
 import java.time.LocalDate;
 
-public class Car {
+public class Car extends Transport{
 
-    private final String brand;
-    private final String model;
     float engineVolume;
     String color;
-    private final int productionYear;
-    private final String productionCountry;
     String transmission;
     private final String carcaseType;
     String registrationNumber;
@@ -21,13 +17,10 @@ public class Car {
 
     public Car(String brand, String model, float engineVolume, String color, int productionYear,
                String productionCountry, String transmission, String carcaseType, String registrationNumber,
-               int seatsAmount, boolean isWinterTires, Key key, Insurance insurance) {
-        this.brand = ValidationUtils.validOrDefault(brand, "Default");
-        this.model = ValidationUtils.validOrDefault(model, "Default");
+               int seatsAmount, boolean isWinterTires, Key key, Insurance insurance, int maxSpeed) {
+        super(brand, model, productionYear, productionCountry, color, maxSpeed);
+
         this.engineVolume = engineVolume > 0 ? engineVolume : 1.5f;
-        this.color = ValidationUtils.validOrDefault(color, "White");
-        this.productionYear = productionYear > 0 ? productionYear : 2000;
-        this.productionCountry = ValidationUtils.validOrDefault(productionCountry, "Default");
         this.transmission = ValidationUtils.validOrDefault(transmission, "Manual");
         this.carcaseType = ValidationUtils.validOrDefault(carcaseType, "Default");
         this.registrationNumber = registrationNumber;
@@ -40,34 +33,22 @@ public class Car {
     @Override
     public String toString() {
         return "Car{" +
-                "brand='" + brand + '\'' +
-                ", model='" + model + '\'' +
-                ", engineVolume=" + engineVolume +
+                "engineVolume=" + engineVolume +
                 ", color='" + color + '\'' +
-                ", productionYear=" + productionYear +
-                ", productionCountry='" + productionCountry + '\'' +
                 ", transmission='" + transmission + '\'' +
                 ", carcaseType='" + carcaseType + '\'' +
                 ", registrationNumber='" + registrationNumber + '\'' +
                 ", seatsAmount=" + seatsAmount +
                 ", isWinterTires=" + isWinterTires +
+                ", key=" + key +
+                ", insurance=" + insurance +
+                ", brand='" + brand + '\'' +
+                ", model='" + model + '\'' +
+                ", productionYear=" + productionYear +
+                ", productionCountry='" + productionCountry + '\'' +
+                ", color='" + color + '\'' +
+                ", maxSpeed=" + maxSpeed +
                 '}';
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public int getProductionYear() {
-        return productionYear;
-    }
-
-    public String getProductionCountry() {
-        return productionCountry;
     }
 
     public String getCarcaseType() {
@@ -86,6 +67,12 @@ public class Car {
         return color;
     }
 
+    @Override
+    public void refill() {
+        System.out.println("Можно заправлять бензином, дизелем на заправке или заряжать на специальных электропарковках," +
+                " если это электрокар");
+    }
+
     public String getTransmission() {
         return transmission;
     }
@@ -100,10 +87,6 @@ public class Car {
 
     public void setEngineVolume(float engineVolume) {
         this.engineVolume = engineVolume > 0 ? engineVolume : 1.5f;
-    }
-
-    public void setColor(String color) {
-        this.color = ValidationUtils.validOrDefault(color, "White");
     }
 
     public void setTransmission(String transmission) {
@@ -130,6 +113,7 @@ public class Car {
         String symbols = "ABECKMHOPCTYX";
         return symbols.contains("" + symbol);
     }
+
     public boolean isRegNumberValid() {
         if (this.registrationNumber.length() != 9) {
             return false;
@@ -184,6 +168,17 @@ public class Car {
 
 
         }
-    }
 
+        public LocalDate getValidUntil() {
+            return validUntil;
+        }
+
+        public float getInsuranceCost() {
+            return insuranceCost;
+        }
+
+        public String getInsuranceNumber() {
+            return insuranceNumber;
+        }
+    }
 }
