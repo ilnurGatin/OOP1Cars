@@ -1,6 +1,7 @@
 package transport;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Car extends Transport{
 
@@ -28,27 +29,6 @@ public class Car extends Transport{
         this.isWinterTires =isWinterTires;
         this.key = key;
         this.insurance = insurance;
-    }
-
-    @Override
-    public String toString() {
-        return "Car{" +
-                "engineVolume=" + engineVolume +
-                ", color='" + color + '\'' +
-                ", transmission='" + transmission + '\'' +
-                ", carcaseType='" + carcaseType + '\'' +
-                ", registrationNumber='" + registrationNumber + '\'' +
-                ", seatsAmount=" + seatsAmount +
-                ", isWinterTires=" + isWinterTires +
-                ", key=" + key +
-                ", insurance=" + insurance +
-                ", brand='" + brand + '\'' +
-                ", model='" + model + '\'' +
-                ", productionYear=" + productionYear +
-                ", productionCountry='" + productionCountry + '\'' +
-                ", color='" + color + '\'' +
-                ", maxSpeed=" + maxSpeed +
-                '}';
     }
 
     public String getCarcaseType() {
@@ -109,11 +89,11 @@ public class Car extends Transport{
     private boolean isNumber(char symbol) {
         return Character.isDigit(symbol);
     }
+
     private boolean isCharacter(char symbol) {
         String symbols = "ABECKMHOPCTYX";
         return symbols.contains("" + symbol);
     }
-
     public boolean isRegNumberValid() {
         if (this.registrationNumber.length() != 9) {
             return false;
@@ -131,9 +111,9 @@ public class Car extends Transport{
     }
 
     public static class Key {
+
         private final boolean keyLessStart;
         private final boolean remoteEngineStart;
-
         public Key(boolean keyLessStart, boolean remoteEngineStart) {
             this.keyLessStart = keyLessStart;
             this.remoteEngineStart = remoteEngineStart;
@@ -146,13 +126,13 @@ public class Car extends Transport{
         public boolean isRemoteEngineStart() {
             return remoteEngineStart;
         }
-    }
 
+    }
     public static class Insurance {
+
         private final LocalDate validUntil;
         private final float insuranceCost;
         private final String insuranceNumber;
-
         public Insurance(LocalDate validUntil, float insuranceCost, String insuranceNumber) {
             this.validUntil = validUntil != null ? validUntil : LocalDate.now().plusDays(10);
             this.insuranceCost = insuranceCost > 0 ? insuranceCost : 1;
@@ -180,5 +160,39 @@ public class Car extends Transport{
         public String getInsuranceNumber() {
             return insuranceNumber;
         }
+
+    }
+    @Override
+    public String toString() {
+        return "Car{" +
+                "engineVolume=" + engineVolume +
+                ", color='" + color + '\'' +
+                ", transmission='" + transmission + '\'' +
+                ", carcaseType='" + carcaseType + '\'' +
+                ", registrationNumber='" + registrationNumber + '\'' +
+                ", seatsAmount=" + seatsAmount +
+                ", isWinterTires=" + isWinterTires +
+                ", key=" + key +
+                ", insurance=" + insurance +
+                ", brand='" + brand + '\'' +
+                ", model='" + model + '\'' +
+                ", productionYear=" + productionYear +
+                ", productionCountry='" + productionCountry + '\'' +
+                ", color='" + color + '\'' +
+                ", maxSpeed=" + maxSpeed +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Car car = (Car) o;
+        return Float.compare(car.engineVolume, engineVolume) == 0 && seatsAmount == car.seatsAmount && isWinterTires == car.isWinterTires && Objects.equals(color, car.color) && Objects.equals(transmission, car.transmission) && Objects.equals(carcaseType, car.carcaseType) && Objects.equals(registrationNumber, car.registrationNumber) && Objects.equals(key, car.key) && Objects.equals(insurance, car.insurance);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(engineVolume, color, transmission, carcaseType, registrationNumber, seatsAmount, isWinterTires, key, insurance);
     }
 }

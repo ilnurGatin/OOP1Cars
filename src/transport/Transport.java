@@ -1,5 +1,7 @@
 package transport;
 
+import java.util.Objects;
+
 public abstract class Transport {
     String brand;
     String model;
@@ -58,4 +60,17 @@ public abstract class Transport {
     }
 
     abstract void refill();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Transport transport = (Transport) o;
+        return productionYear == transport.productionYear && maxSpeed == transport.maxSpeed && Objects.equals(brand, transport.brand) && Objects.equals(model, transport.model) && Objects.equals(productionCountry, transport.productionCountry) && Objects.equals(color, transport.color);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(brand, model, productionYear, productionCountry, color, maxSpeed);
+    }
 }

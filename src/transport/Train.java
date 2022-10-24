@@ -1,5 +1,7 @@
 package transport;
 
+import java.util.Objects;
+
 public class Train extends Transport{
     private double ticketCost;
     private float travelTimeInHours;
@@ -59,6 +61,11 @@ public class Train extends Transport{
     }
 
     @Override
+    public void refill() {
+        System.out.println("Нужно заправлять дизелем");
+    }
+
+    @Override
     public String toString() {
         return "Train{" +
                 "ticketCost=" + ticketCost +
@@ -76,7 +83,15 @@ public class Train extends Transport{
     }
 
     @Override
-    public void refill() {
-        System.out.println("Нужно заправлять дизелем");
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Train train = (Train) o;
+        return Double.compare(train.ticketCost, ticketCost) == 0 && Float.compare(train.travelTimeInHours, travelTimeInHours) == 0 && carriageAmount == train.carriageAmount && Objects.equals(departureStation, train.departureStation) && Objects.equals(arrivalStation, train.arrivalStation);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ticketCost, travelTimeInHours, departureStation, arrivalStation, carriageAmount);
     }
 }

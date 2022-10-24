@@ -8,6 +8,10 @@ public class Bus extends Transport {
         super(brand, model, productionYear, productionCountry, color, maxSpeed);
     }
 
+    public void refill() {
+        System.out.println("Можно заправлять бензином или дизелем на заправке");
+    }
+
     @Override
     public String toString() {
         return "Bus{" +
@@ -20,7 +24,13 @@ public class Bus extends Transport {
                 '}';
     }
 
-    public void refill() {
-        System.out.println("Можно заправлять бензином или дизелем на заправке");
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }
